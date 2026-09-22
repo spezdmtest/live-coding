@@ -1,7 +1,11 @@
 package main
 
-import "fmt"
+import (
+	"errors"
+	"fmt"
+)
 
+/*
 type Switcher interface {
 	TurnOn() string
 	TurnOff() string
@@ -32,21 +36,50 @@ func (p Phone) TurnOff() string {
 func (p Phone) Charge() string {
 	return p.Brand + " " + p.Model + " is charging."
 }
+*/
+
+type Tomato struct {
+	Variety string
+	Weight  int
+}
+
+func (t Tomato) Pick() (string, error) {
+	if t.Weight < 100 {
+		return "", errors.New("Tomato is too small to pick")
+	}
+	return "Picked a " + t.Variety + " tomato weighing " + fmt.Sprint(t.Weight) + " grams.", nil
+}
 
 func main() {
-	//fmt.Println("Проєкт live-coding успішно запущено!")
-	fmt.Println("Embedded Interfaces")
+	fmt.Println("Error Handling")
 
-	myPhone := Phone{
-		Brand: "Oukitel",
-		Model: "WP19",
+	greenTomato := Tomato{
+		Variety: "Green Zebra",
+		Weight:  90,
 	}
 
-	var device SmartDevice = myPhone
+	message, err := greenTomato.Pick()
 
-	fmt.Println("--- Test SmartDevice Interface ---")
+	if err != nil {
+		fmt.Printf("Увага: %s\n", err)
+	}
+	fmt.Println(message)
 
-	fmt.Println(device.TurnOn())
-	fmt.Println(device.Charge())
-	fmt.Println(device.TurnOff())
+	/*
+		//fmt.Println("Проєкт live-coding успішно запущено!")
+		fmt.Println("Embedded Interfaces")
+
+		myPhone := Phone{
+			Brand: "Oukitel",
+			Model: "WP19",
+		}
+
+		var device SmartDevice = myPhone
+
+		fmt.Println("--- Test SmartDevice Interface ---")
+
+		fmt.Println(device.TurnOn())
+		fmt.Println(device.Charge())
+		fmt.Println(device.TurnOff())
+	*/
 }
